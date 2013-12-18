@@ -50,9 +50,8 @@ import org.thymeleaf.Arguments;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IProcessingContext;
 import org.thymeleaf.exceptions.TemplateProcessingException;
-import org.thymeleaf.spring3.expression.SpelEvaluationContext;
-import org.thymeleaf.spring3.expression.SpelVariableExpressionEvaluator;
 import org.thymeleaf.standard.StandardDialect;
+import org.thymeleaf.standard.expression.IStandardVariableExpressionEvaluator;
 import org.thymeleaf.util.Validate;
 
 
@@ -208,15 +207,13 @@ public final class AuthUtils {
             // this variable map.
             
             final Arguments arguments = (Arguments) processingContext;
-            final Object expressionEvaluator = 
-                    arguments.getExecutionAttribute(StandardDialect.EXPRESSION_EVALUATOR_EXECUTION_ATTRIBUTE);
-            
-            final SpelVariableExpressionEvaluator spelExprEval =
-                    ((expressionEvaluator != null && expressionEvaluator instanceof SpelVariableExpressionEvaluator)?
-                            (SpelVariableExpressionEvaluator) expressionEvaluator :
-                            SpelVariableExpressionEvaluator.INSTANCE);
-            contextVariables = spelExprEval.computeContextVariables(arguments.getConfiguration(), arguments);
-            
+
+            final IStandardVariableExpressionEvaluator expressionEvaluator =
+                    (IStandardVariableExpressionEvaluator) arguments.getExecutionAttribute(StandardDialect.EXPRESSION_EVALUATOR_EXECUTION_ATTRIBUTE);
+
+            contextVariables =
+                    SpringVersionSpecificUtils.computeExpressionObjectsFromExpressionEvaluator(arguments, expressionEvaluator);
+
         }
         
         if (contextVariables == null) {
@@ -232,8 +229,9 @@ public final class AuthUtils {
         
         
         // We add Thymeleaf's wrapper on top of the SpringSecurity basic evaluation context
-        final SpelEvaluationContext spelEvaluationContext = new SpelEvaluationContext(evaluationContext, contextVariables);
-        
+        final EvaluationContext spelEvaluationContext =
+                SpringVersionSpecificUtils.wrapEvaluationContext(evaluationContext, contextVariables);
+
         if (ExpressionUtils.evaluateAsBoolean(expressionObject, spelEvaluationContext)) {
 
             if (logger.isTraceEnabled()) {
