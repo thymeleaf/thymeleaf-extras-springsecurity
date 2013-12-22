@@ -104,7 +104,7 @@
 
   <properties>
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-    <thymeleaf.version>2.0.15</thymeleaf.version>
+    <thymeleaf.version>2.0.20-SNAPSHOT</thymeleaf.version>
     <springsecurity.version>3.0.7.RELEASE</springsecurity.version>
   </properties>
 
@@ -253,8 +253,16 @@
       <artifactId>thymeleaf-spring3</artifactId>
       <version>${thymeleaf.version}</version>
       <scope>compile</scope>
+      <optional>true</optional>
     </dependency>
-      
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring4</artifactId>
+      <version>${thymeleaf.version}</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
