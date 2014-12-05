@@ -40,11 +40,12 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ParseException;
 import org.springframework.security.access.expression.ExpressionUtils;
+import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.WebInvocationPrivilegeEvaluator;
-import org.springframework.security.web.access.expression.WebSecurityExpressionHandler;
+
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.TemplateEngine;
@@ -179,7 +180,7 @@ public final class AuthUtils {
                         accessExpression.substring(2, accessExpression.length() - 1) :
                         accessExpression);
         
-        final WebSecurityExpressionHandler handler = getExpressionHandler(servletContext);
+        final SecurityExpressionHandler handler = getExpressionHandler(servletContext);
 
         Expression expressionObject = null;
         try {
@@ -255,22 +256,22 @@ public final class AuthUtils {
     
     
     
-    private static WebSecurityExpressionHandler getExpressionHandler(final ServletContext servletContext) {
+    private static SecurityExpressionHandler getExpressionHandler(final ServletContext servletContext) {
 
         final ApplicationContext ctx =
                 WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
         
-        final Map<String, WebSecurityExpressionHandler> expressionHandlers = 
-                ctx.getBeansOfType(WebSecurityExpressionHandler.class);
+        final Map<String, SecurityExpressionHandler> expressionHandlers = 
+                ctx.getBeansOfType(SecurityExpressionHandler.class);
 
-        if (expressionHandlers.size() == 0) {
+        if (expressionHandlers.isEmpty()) {
             throw new TemplateProcessingException(
                     "No visible WebSecurityExpressionHandler instance could be found in the application " +
                     "context. There must be at least one in order to support expressions in Spring Security " +
                     "authorization queries.");
         }
 
-        return (WebSecurityExpressionHandler) expressionHandlers.values().toArray()[0];
+        return (SecurityExpressionHandler) expressionHandlers.values().toArray()[0];
         
     }
     
@@ -290,8 +291,7 @@ public final class AuthUtils {
         
         final boolean result =
                 getPrivilegeEvaluator(servletContext).isAllowed(
-                    request.getContextPath(), url, method, authentication) ? 
-                            true : false;
+                    request.getContextPath(), url, method, authentication);
 
         if (logger.isTraceEnabled()) {
             logger.trace("[THYMELEAF][{}] Checked authorization for URL \"{}\" and method \"{}\" for user \"{}\". " +
@@ -316,7 +316,7 @@ public final class AuthUtils {
         final Map<String, WebInvocationPrivilegeEvaluator> privilegeEvaluators = 
                 ctx.getBeansOfType(WebInvocationPrivilegeEvaluator.class);
 
-        if (privilegeEvaluators.size() == 0) {
+        if (privilegeEvaluators.isEmpty()) {
             throw new TemplateProcessingException(
                     "No visible WebInvocationPrivilegeEvaluator instance could be found in the application " +
                     "context. There must be at least one in order to support URL access checks in " +
