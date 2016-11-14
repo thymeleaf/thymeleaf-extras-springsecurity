@@ -1,5 +1,7 @@
 2.1.3
 =====
+- Adapt the mechanism to retrieve the WebApplicationContext to newer versions (non-root attribute names).
+- Flexibilize the mechanism for obtaining the PrivilegeEvaluator (request attributes instead of app ctx bean).
 - Fixed log TRACE output during retrieval of Authentication object.
 
 
