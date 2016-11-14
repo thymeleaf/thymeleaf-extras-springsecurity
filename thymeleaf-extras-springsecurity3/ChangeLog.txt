@@ -1,3 +1,8 @@
+2.1.3
+=====
+- Fixed log TRACE output during retrieval of Authentication object.
+
+
 2.1.2
 =====
 - Improved MANIFEST metadata.
