@@ -20,7 +20,7 @@ This repository contains two projects:
 
 Current versions: 
 
-  * **Version 2.1.2.RELEASE** - for Thymeleaf 2.1 (requires 2.1.2+)
+  * **Version 2.1.3.RELEASE** - for Thymeleaf 2.1 (requires 2.1.2+)
 
 
 License
