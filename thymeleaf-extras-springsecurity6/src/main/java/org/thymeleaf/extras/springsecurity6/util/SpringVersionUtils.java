@@ -70,7 +70,10 @@ public final class SpringVersionUtils {
 
         } else {
 
-            if (ClassLoaderUtils.isClassPresent(springPackageName + ".core.io.buffer.DataBuffer")) {
+            if (ClassLoaderUtils.isClassPresent(springPackageName + ".context.annotation.ImportAwareAotBeanPostProcessor")) {
+                SPRING_VERSION_MAJOR = 6;
+                SPRING_VERSION_MINOR = 0;
+            } else if (ClassLoaderUtils.isClassPresent(springPackageName + ".core.io.buffer.DataBuffer")) {
                 SPRING_VERSION_MAJOR = 5;
                 SPRING_VERSION_MINOR = 0;
             } else if (ClassLoaderUtils.isClassPresent(springPackageName + ".context.annotation.ComponentScans")) {
