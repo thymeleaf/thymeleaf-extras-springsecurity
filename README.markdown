@@ -21,7 +21,7 @@ This repository contains 3 projects:
 
 Current versions: 
 
- * **Version 3.0.4.RELEASE** - for Thymeleaf 3.0 (requires Thymeleaf 3.0.10+)
+ * **Version 3.0.5.RELEASE** - for Thymeleaf 3.0 (requires Thymeleaf 3.0.10+)
  * **Version 2.1.3.RELEASE** - for Thymeleaf 2.1 (requires Thymeleaf 2.1.2+)
 
 
@@ -50,12 +50,6 @@ Maven info
     * Spring Security 4 integration package: `thymeleaf-extras-springsecurity4`
     * Spring Security 5 integration package: `thymeleaf-extras-springsecurity5`
 
-
-Distribution packages
----------------------
-
-Distribution packages (binaries + sources + javadoc) can be downloaded from
-[bintray](https://dl.bintray.com/thymeleaf/downloads).
 
 
 Features
